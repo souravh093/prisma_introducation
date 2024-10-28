@@ -31,26 +31,25 @@ const main = async () => {
       published: true,
       authorId: 1,
       postCategory: {
-        // create: {
-        //   //   category: {
-        //   //     connect: {
-        //   //       id: 1,
-        //   //     },
-        //   //   },
-        //   categoryId: 3,
-        // },
+        create: {
+          category: {
+            connect: {
+              id: 1,
+            },
+          },
+        },
 
-        create: [
-          {
-            categoryId: 1,
-          },
-          {
-            categoryId: 4,
-          },
-          {
-            categoryId: 3,
-          },
-        ],
+        // create: [
+        //   {
+        //     categoryId: 1,
+        //   },
+        //   {
+        //     categoryId: 4,
+        //   },
+        //   {
+        //     categoryId: 3,
+        //   },
+        // ],
       },
     },
     include: {
