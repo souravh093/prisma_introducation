@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id           Int            @id @default(autoincrement())
+  title        String
+  content      String         @db.Text
+  published    Boolean        @default(false)
+  authorId     Int
+  post         User           @relation(fields: [authorId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  postCategory PostCategory[]
+
+  @@map("posts")
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
+  role     UserRole @default(user)
+  profile  Profile? // one to one relation
+  post     Post[] // one to many relation
+
+  @@map("users")
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  userId Int     @unique // added @unique key to one to one realtion
+  user   User    @relation(fields: [userId], references: [id])
+
+  @@map("profils")
+}
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  postCategory PostCategory[]
+
+  @@map("categories")
+}
+
+// intermidiate table fo many to many relation
+model PostCategory {
+  postId     Int
+  post       Post     @relation(fields: [postId], references: [id])
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([postId, categoryId]) // make composite key conbined to unique key 
+  @@map("post_categories")
+}
