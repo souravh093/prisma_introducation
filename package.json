@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/logging.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/groupBy.ts"
   },
   "keywords": [],
   "author": "",
